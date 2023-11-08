@@ -1,0 +1,32 @@
+
+version: '3.1'
+
+services:
+
+  node-app:
+    build:
+      context: ./node_app
+    ports:
+      - "3000:3000"  # Mapeie a porta do container para a porta do host
+    volumes:
+      - ./node_app:/usr/app  # Mapeie o diretório do host para o diretório do contêiner
+    depends_on:
+      - db  # Garanta que o contêiner do MySQL esteja pronto antes de iniciar o aplicativo Node.js
+
+  db:
+    image: mysql
+    container_name: mysql
+    command: --default-authentication-plugin=caching_sha2_password
+    restart: always
+    environment:
+  
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
