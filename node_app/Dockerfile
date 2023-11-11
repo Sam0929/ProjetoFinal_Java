@@ -20,4 +20,4 @@ RUN npm install -g nodemon
 EXPOSE 3000
 
 # Comando para iniciar a aplicação Node.js
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npm install && nodemon -L index.js"]

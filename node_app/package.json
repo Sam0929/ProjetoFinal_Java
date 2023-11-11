@@ -3,19 +3,12 @@
   "version": "1.0.0",
   "description": "My Node.js Application",
   "main": "index.js",
-  "scripts" : {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -L index.js"
-  },
   "author": "Samuel",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "sequelize": "^7.0.0-alpha2.1",
+    "sequelize": "^6.6.5",
     "mysql2": "2.2.5"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.12"
   }
   
 }
