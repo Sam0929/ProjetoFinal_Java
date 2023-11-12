@@ -7,9 +7,6 @@ WORKDIR /usr/app
 # Copie o arquivo package.json e package-lock.json para o diretório de trabalho
 COPY package*.json ./
 
-# Instale as dependências do Node.js
-RUN npm install
-
 # Copie todo o código fonte da sua aplicação para o diretório de trabalho
 COPY . .
 
