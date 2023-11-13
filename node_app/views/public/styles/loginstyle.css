@@ -6,6 +6,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: #77ffc0;
+}
 
 .main-login{
     width: 100vw;
