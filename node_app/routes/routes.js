@@ -1,19 +1,18 @@
 const express = require ('express');
-const routes = express.Router();
+const router = express.Router();
 const path = require('path');
 const { body, validationResult } = require('express-validator');
-const User = require('./models/User');
+const User = require('../models/User');
 
-routes.use(express.static('views'));
+router.use(express.static('views'));
 
-routes.get('/', (req, res) => {
-    console.log('Acessando rota /a');
+router.get('/', (req, res) => {
+
     res.render('home');
 });
 
-routes.get('/users', (req, res) => {
-    console.log('Acessando rota /users');
-     
+router.get('/users', (req, res) => {
+    
     User.findAll({order: [['id', 'ASC']]}).then(users => {
         res.render('users', {
             users: users.map(user => user.toJSON())
@@ -21,16 +20,16 @@ routes.get('/users', (req, res) => {
     });
 });
 
-routes.get('/login', (req, res) => {
-    console.log('Acessando rota /login');
-    res.sendFile(path.join(__dirname, '/views/plain-html/login.html'));
+router.get('/login', (req, res) => {
+
+    res.sendFile(path.join(__dirname, '../views/plain-html/login.html'));
 });
 
-routes.get('/cad', (req, res) => {
-    console.log('Acessando rota /cad');
+router.get('/cad', (req, res) => {
+
     res.render('form');
 });
-routes.post('/add',
+router.post('/add',
     [
       body('nome').notEmpty().withMessage('O campo Nome é obrigatório'),
       body('sobrenome').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
@@ -53,7 +52,7 @@ routes.post('/add',
         email: req.body.email,
       })
         .then(function () {
-          res.redirect('/');
+          res.redirect('/users');
         })
         .catch(function (erro) {
           res.send('Erro: ' + erro);
@@ -61,6 +60,20 @@ routes.post('/add',
     }
   );
 
+  router.get('/deletar/:id', (req, res) => {
+
+    User.destroy({where: {'id': req.params.id}})
+
+      .then(() =>{
+        res.json("Postagem deletada com sucesso!");
+      })
+      .catch((erro) =>{
+        res.json("Essa postagem não existe!!");
+      });
+    
+
+  });
 
 
-module.exports = routes;
+
+module.exports = router;
