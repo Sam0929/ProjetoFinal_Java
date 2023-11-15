@@ -62,13 +62,40 @@ router_adm.post('/add',
         }
   
         
-        res.render('./admins/edit_users', {  users: user.map(user => user.toJSON()) });
+        res.render('./admins/edit_users', { user: user });
       })
       .catch((erro) => {
       
         req.flash('error_msg', 'Erro ao buscar o usuário!');
         res.redirect('/admin/users');
       });
+  });
+
+  router_adm.post('/update', (req, res) => {
+    
+    User.findOne({ where: { id: req.body.id } })
+    .then((user) => {
+      if (!user) {
+        
+        req.flash('error_msg', 'ID de usuário não encontrado');
+        return res.redirect('/admin/users');
+      }
+
+      user.nome = req.body.nome;
+      user.sobrenome = req.body.sobrenome;
+      user.idade = req.body.idade;
+      user.email = req.body.email;
+
+      user.save()
+        .then(() => {
+          req.flash('success_msg', 'Usuário atualizado com sucesso!');
+          res.redirect('/admin/users');
+        })
+        .catch((erro) => {
+          req.flash('error_msg', 'Erro ao atualizar o usuário!');
+          res.redirect('/admin/users');
+        });
+    });
   });
 
   router_adm.get('/deletar/:id', (req, res) => {

@@ -7,6 +7,7 @@
     const router_adm = require ('./routes/admin');
     const session = require('express-session');
     const flash = require('connect-flash');
+    const path = require('path');
 
     require('./models/db.js');
     require('./models/User.js');
@@ -45,7 +46,7 @@
 
     // Public
 
-        app.use(express.static('views'));
+        app.use(express.static('views'));                          // Middleware para arquivos estáticos, como css, js, imagens, etc.
 
         
 
