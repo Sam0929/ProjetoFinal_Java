@@ -9,13 +9,13 @@ router_adm.get('/users', (req, res) => {
     User.findAll({order: [['id', 'ASC']]}).then(users => {
         res.render('./admins/users', {
             users: users.map(user => user.toJSON())
-        })
+        });
     });
 });
 
 router_adm.get('/cad', (req, res) => {
 
-    res.render('./admins/form');
+    res.render('./admins/add_users');
 });
 
 router_adm.post('/add',
@@ -30,7 +30,7 @@ router_adm.post('/add',
   
       if (!errors.isEmpty()) {
         // Se houver erros de validação, renderize a página do formulário novamente com os erros
-        return res.render('form', { errors: errors.array() });
+        return res.render('./admins/add_users', { errors: errors.array() });
       }
   
       // Se a validação passar, continue com a lógica de criar o usuário
@@ -40,28 +40,64 @@ router_adm.post('/add',
         idade: req.body.idade,
         email: req.body.email,
       })
-        .then(function () {
+        .then(() =>{
+          req.flash('success_msg', 'Usuário criado com sucesso!');
           res.redirect('/admin/users');
         })
-        .catch(function (erro) {
-          res.send('Erro: ' + erro);
+        .catch((erro) => {
+          res.flash('error_msg', 'Erro ao criar o usuário!');
+          res.redirect('/admin/users');
         });
     }
   );
 
-  router_adm.get('/deletar/:id', (req, res) => {
-
-    User.destroy({where: {'id': req.params.id}})
-
-      .then(() =>{
-        res.json("Postagem deletada com sucesso!");
+  router_adm.get('/editar/:id', (req, res) => {
+   
+    User.findOne({ where: { id: req.params.id } })
+      .then((user) => {
+        if (!user) {
+          
+          req.flash('error_msg', 'ID de usuário não encontrado');
+          return res.redirect('/admin/users');
+        }
+  
+        
+        res.render('./admins/edit_users', {  users: user.map(user => user.toJSON()) });
       })
-      .catch((erro) =>{
-        res.json("Essa postagem não existe!!");
+      .catch((erro) => {
+      
+        req.flash('error_msg', 'Erro ao buscar o usuário!');
+        res.redirect('/admin/users');
       });
-    
-
   });
+
+  router_adm.get('/deletar/:id', (req, res) => {
+    
+    User.findOne({ where: { id: req.params.id } })
+      .then((user) => {
+        if (!user) {
+        
+          req.flash('error_msg', 'ID de usuário não encontrado');
+          return res.redirect('/admin/users');
+        }
+  
+        User.destroy({ where: { id: req.params.id } })
+          .then(() => {
+            req.flash('success_msg', 'Usuário deletado com sucesso!');
+            res.redirect('/admin/users');
+          })
+          .catch((erro) => {
+            req.flash('error_msg', 'Erro ao deletar o usuário!');
+            res.redirect('/admin/users');
+          });
+      })
+      .catch((erro) => {
+   
+        req.flash('error_msg', 'Erro ao buscar o usuário!');
+        res.redirect('/admin/users');
+      });
+  });
+  
 
 
 

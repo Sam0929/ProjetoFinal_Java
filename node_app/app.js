@@ -5,6 +5,8 @@
     const bodyParser = require('body-parser');
     const router = require('./routes/routes');
     const router_adm = require ('./routes/admin');
+    const session = require('express-session');
+    const flash = require('connect-flash');
 
     require('./models/db.js');
     require('./models/User.js');
@@ -12,6 +14,21 @@
 
 // Configurações
 
+    // Session
+        app.use(session({
+            secret: "qualquercoisa",
+            resave: true,
+            saveUninitialized: true
+        }));
+        app.use(flash());
+
+    // Middleware
+        
+        app.use((req, res, next) => {
+            res.locals.success_msg = req.flash("success_msg");              //locals, variáveis globais
+            res.locals.error_msg = req.flash("error_msg");
+            next();
+        });
     // Handlebars
 
         const hbs = handlebars.create({
@@ -29,6 +46,8 @@
     // Public
 
         app.use(express.static('views'));
+
+        
 
 // Rotas
 

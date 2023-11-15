@@ -30,7 +30,7 @@
                                     <td class="text-break">{{sobrenome}}</td>
                                     <td class="text-break">{{idade}}</td>
                                     <td class="text-break">{{email}}</td>
-                                    <td class="text-center"> <a class="btn btn-primary" href="" role="button">Editar</a></td>
+                                    <td class="text-center"> <a class="btn btn-primary" href="/admin/editar/{{id}}" role="button">Editar</a></td>
                                     <td class="text-center">
                                           <form action="/admin/deletar/{{id}}" method="get">
                                           <button class="btn btn-danger">Deletar</button>
@@ -47,3 +47,24 @@
         </div>
     </div>
 </div>
+
+<!-- Errors -->
+
+    <div class='container mt-3'>
+        <div class='row justify-content-center'>
+            <div class='col-md-8'>
+                
+
+                    {{#if errors}}
+                        <div class="alert alert-danger">
+                            <ul>
+                            {{#each errors}}
+                                <li>{{this.msg}}</li>
+                            {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                
+            </div>
+        </div>
+    </div>      

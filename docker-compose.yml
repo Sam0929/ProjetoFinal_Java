@@ -31,12 +31,6 @@ services:
     ports:
       - "3306:3306"  # Mapeie a porta do container para a porta do host
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 7000:7000
-
   ubuntu-container:
     image: ubuntu:latest
     command: /bin/bash
