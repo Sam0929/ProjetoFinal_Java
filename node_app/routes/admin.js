@@ -21,9 +21,8 @@ router_adm.get('/cad', (req, res) => {
 router_adm.post('/add',
     [
       body('nome').notEmpty().withMessage('O campo Nome é obrigatório'),
-      body('sobrenome').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
-      body('idade').notEmpty().isInt().withMessage('A Idade deve ser um número inteiro'),
-      body('email').notEmpty().isEmail().withMessage('Digite um endereço de e-mail válido'),
+      body('email').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
+      body('password').notEmpty().withMessage('A senha não pode estar vazia!').isLength({ min: 8}).withMessage('A senha deve ter no mínimo 8 caracteres!'),
     ],
     (req, res) => {
       const errors = validationResult(req);
@@ -36,9 +35,8 @@ router_adm.post('/add',
       // Se a validação passar, continue com a lógica de criar o usuário
       User.create({
         nome: req.body.nome,
-        sobrenome: req.body.sobrenome,
-        idade: req.body.idade,
         email: req.body.email,
+        password: req.body.password,
       })
         .then(() =>{
           req.flash('success_msg', 'Usuário criado com sucesso!');
@@ -54,7 +52,7 @@ router_adm.post('/add',
   router_adm.get('/editar/:id', (req, res) => {
    
     User.findOne({ where: { id: req.params.id } })
-      .then((user) => {
+      .then((user) => {                                                        
         if (!user) {
           
           req.flash('error_msg', 'ID de usuário não encontrado');
@@ -76,15 +74,14 @@ router_adm.post('/add',
     User.findOne({ where: { id: req.body.id } })
     .then((user) => {
       if (!user) {
-        
+                                                                                    // Falta validar os dados!
         req.flash('error_msg', 'ID de usuário não encontrado');
         return res.redirect('/admin/users');
       }
 
       user.nome = req.body.nome;
-      user.sobrenome = req.body.sobrenome;
-      user.idade = req.body.idade;
       user.email = req.body.email;
+      user.password = req.body.password;
 
       user.save()
         .then(() => {

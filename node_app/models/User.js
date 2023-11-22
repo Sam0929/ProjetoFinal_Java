@@ -5,13 +5,10 @@ const Users = db.sequelize.define('users', {
     nome: {
         type: db.Sequelize.STRING
     },
-    sobrenome: {
+    email: {
         type: db.Sequelize.STRING
     },
-    idade: {
-        type: db.Sequelize.INTEGER
-    },
-    email: {
+    password: {
         type: db.Sequelize.STRING
     }
 });
