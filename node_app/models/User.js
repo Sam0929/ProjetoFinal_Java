@@ -13,6 +13,26 @@ const Users = db.sequelize.define('users', {
     }
 });
 
-//Users.sync({force: true});
+
+async function checkIfTableExists() {
+    try {
+        
+        const table = await Users.describe();
+
+       
+        if (table) {
+            await Users.sync();
+            console.log('Tabela sincronizada com sucesso.');
+        } else {
+            // Se a tabela não existir, cria a tabela
+            await Users.sync({ force: true });
+            console.log('Tabela criada com sucesso.');
+        }
+    } catch (error) {
+        console.error('Erro ao verificar/sincronizar a tabela:', error);
+    }
+}
+
+checkIfTableExists();
 
 module.exports = Users;
