@@ -2,6 +2,9 @@ const express = require ('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const path = require('path');
+const bcrypt = require ('bcrypt');
+const jwt = require ('jsonwebtoken');
+const User = require('../models/User');
 
 router.get('/', (req, res) => {
 
@@ -10,12 +13,12 @@ router.get('/', (req, res) => {
 
 router.get('/register', (req, res) => {
   
-      res.sendFile(path.join(__dirname, '../views/plain-html/signup.html'));
+     res.render('signup');
   });
 
 router.post('/auth/register', [
     
-    body('nome').notEmpty().withMessage('O campo Nome é obrigatório'),
+    body('name').notEmpty().withMessage('O campo Nome é obrigatório'),
     body('email').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
     body('password').notEmpty().withMessage('A senha não pode estar vazia!').isLength({ min: 8}).withMessage('A senha deve ter no mínimo 8 caracteres!'),
 
@@ -28,20 +31,20 @@ router.post('/auth/register', [
 
     if (!errors.isEmpty()) {
       // Se houver erros de validação, renderize a página do formulário novamente com os erros
-      return res.sendfile(path.join(__dirname, '../views/plain-html/sigup.html'), { errors: errors.array() });                              //Em desenvolvimento
+      return res.render('signup', { errors: errors.array() });                              //Em desenvolvimento
     } 
 
     const {name, email, password, confirmpassword} = req.body;
 
     if(password != confirmpassword){
-      return res.sendfile(path.join(__dirname, '../views/plain-html/signup.html'), {errors: [{msg: 'As senhas não conferem!'}]});
+      return res.render('signup', {errors: [{msg: 'As senhas não conferem!'}]});
     }
 
     // Verifique se o usuário com o mesmo e-mail já existe no banco de dados
-    let userExist = await User.findOne({email});
+    let userExist = await User.findOne({where: {email : email}});
 
     if(userExist){
-      return res.sendfile(path.join(__dirname, '../views/plain-html/signup.html'), {errors: [{msg: 'O e-mail já está em uso!'}]});
+      return res.render('signup', {errors: [{msg: 'O e-mail já está em uso!'}]});
     }
 
     // Create password
@@ -51,27 +54,77 @@ router.post('/auth/register', [
 
     // Create user
 
-    const user = new User({
-      name,
-      email,
-      password: passwordHash
-    });
-
-    try{
-        await user.save();
-        res.send('Usuário criado com sucesso!');
-
-    }catch(err){
-      res.status(500).send('Erro ao criar o usuário!');
-    };
-
-    res.sendFile(path.join(__dirname, '../views/plain-html/signup.html'));
+    User.create({
+      name: name,
+      email: email,
+      password: passwordHash,
+    })
+      .then(() =>{
+        req.flash('success_msg', 'Usuário criado com sucesso!');
+        res.redirect('/register');
+      })
+      .catch((erro) => {
+        res.flash('error_msg', 'Erro ao criar o usuário!');
+        res.redirect('/register');
+      });
     
 });
 
 router.get('/login', (req, res) => {
 
-    res.sendFile(path.join(__dirname, '../views/plain-html/login.html'));
+    res.render("login");
+});
+
+
+router.post('/auth/login', [
+  
+  body('email').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
+  body('password').notEmpty().withMessage('A senha não pode estar vazia!').isLength({ min: 8}).withMessage('A senha deve ter no mínimo 8 caracteres!'),
+
+],
+
+async(req, res) => 
+
+{
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    // Se houver erros de validação, renderize a página do formulário novamente com os erros
+    return res.render('login', { errors: errors.array() });                              
+  } 
+
+  const {email, password} = req.body;
+
+  // Verifique se o usuário com o mesmo e-mail já existe no banco de dados
+  const user = await User.findOne({where: {email : email}});
+
+  if(!user){
+    return res.render('login', {errors: [{msg: 'Este usuário não existe!'}]});
+  }
+
+  const checkPassword = await bcrypt.compare(password, user.password)
+  if(!checkPassword){
+    return res.render('login', {errors: [{msg: 'As senhas não conferem!'}]});
+  }
+
+  try{
+    const secret = process.env.SECRET;                                                   //Em desenvolvimento
+
+    const token = jwt.sign(
+
+    {
+      id: user._id,
+    },
+    secret,
+    
+    );
+    req.flash('success_msg', 'Autenticação realizada com sucesso!');
+
+  }
+  catch (err) {
+    return res.render('login', {errors: errors.array() });
+  }
+  
 });
 
 module.exports = router;

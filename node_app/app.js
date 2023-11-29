@@ -7,8 +7,7 @@
     const router_adm = require ('./routes/admin');
     const session = require('express-session');
     const flash = require('connect-flash');
-    const bcrypt = require ('bcrypt');
-    const jwt = require ('jsonwebtoken');
+   
 
     require('./models/db.js');
     require('./models/User.js');
@@ -49,10 +48,6 @@
     // Public
 
         app.use(express.static('views'));                          // Middleware para arquivos estáticos, como css, js, imagens, etc.
-
-    // Config Json response
-
-        app.use(express.json());
         
 
 // Rotas

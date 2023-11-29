@@ -20,7 +20,7 @@ router_adm.get('/cad', (req, res) => {
 
 router_adm.post('/add',
     [
-      body('nome').notEmpty().withMessage('O campo Nome é obrigatório'),
+      body('name').notEmpty().withMessage('O campo Nome é obrigatório'),
       body('email').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
       body('password').notEmpty().withMessage('A senha não pode estar vazia!').isLength({ min: 8}).withMessage('A senha deve ter no mínimo 8 caracteres!'),
     ],
@@ -34,7 +34,7 @@ router_adm.post('/add',
   
       // Se a validação passar, continue com a lógica de criar o usuário
       User.create({
-        nome: req.body.nome,
+        name: req.body.name,
         email: req.body.email,
         password: req.body.password,
       })
@@ -79,7 +79,7 @@ router_adm.post('/add',
         return res.redirect('/admin/users');
       }
 
-      user.nome = req.body.nome;
+      user.name = req.body.name;
       user.email = req.body.email;
       user.password = req.body.password;
 

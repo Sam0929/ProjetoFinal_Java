@@ -1,8 +1,9 @@
+const { sequelize } = require('./db.js');
 const db = require('./db.js');
 
 const Users = db.sequelize.define('users', {
 
-    nome: {
+    name: {
         type: db.Sequelize.STRING
     },
     email: {
@@ -14,20 +15,25 @@ const Users = db.sequelize.define('users', {
 });
 
 
-async function checkIfTableExists() {
+function checkIfTableExists() {
     try {
         
-        const table = await Users.describe();
+        sequelize.getQueryInterface().showAllTables()
+        
+            .then (tables => {
+            
+            if (tables.includes(Users)) {
+                Users.sync();
+                console.log('Tabela sincronizada com sucesso.');
+            } else {
+                // Se a tabela não existir, cria a tabela
+                Users.sync({ force: true });
+                console.log('Tabela criada com sucesso.');
+            }
+        });
 
        
-        if (table) {
-            await Users.sync();
-            console.log('Tabela sincronizada com sucesso.');
-        } else {
-            // Se a tabela não existir, cria a tabela
-            await Users.sync({ force: true });
-            console.log('Tabela criada com sucesso.');
-        }
+        
     } catch (error) {
         console.error('Erro ao verificar/sincronizar a tabela:', error);
     }
