@@ -1,10 +1,12 @@
 const express = require ('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const path = require('path');
 const bcrypt = require ('bcrypt');
 const jwt = require ('jsonwebtoken');
 const User = require('../models/User');
+var cookieParser = require('cookie-parser');
+
+router.use (cookieParser());
 
 router.get('/', (req, res) => {
 
@@ -64,7 +66,7 @@ router.post('/auth/register', [
         res.redirect('/register');
       })
       .catch((erro) => {
-        res.flash('error_msg', 'Erro ao criar o usuário!');
+        req.flash('error_msg', 'Erro ao criar o usuário!');
         res.redirect('/register');
       });
     
@@ -120,6 +122,7 @@ async(req, res) =>
     );
     req.flash('success_msg', 'Autenticação realizada com sucesso!');
 
+    res.cookie('token', token, { httpOnly: true, secure: true });
   }
   catch (err) {
     return res.render('login', {errors: errors.array() });
