@@ -1,16 +1,23 @@
 const express = require ('express');
-const router = express.Router();
+const routes_users = express.Router();
 const User = require('../models/User');
 
-router.get('/user/:id', async (req, res) => {
+routes_users.get('/user/:id', async (req, res) => {
 
     const id = req.params.id;
 
-    const user = await User.findById(id, '-password');
+    const user = await User.findOne({where: {id: id} });
 
     if(!user){
-        return req.flash('error_msg', 'Erro ao criar o usuário!');
+        req.flash('error_msg', 'O usuário não existe!');
+        res.redirect('/admin/users');
+    }
+    else{
+        req.flash('success_msg', 'O usuário existe!');
+        res.redirect('/admin/users');
     }
     
-    res.render('home');
+    
 });
+
+module.exports = routes_users;

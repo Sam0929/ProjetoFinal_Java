@@ -7,6 +7,7 @@
     const router_adm = require ('./routes/admin');
     const session = require('express-session');
     const flash = require('connect-flash');
+const routes_users = require('./routes/user');
    
 
     require('./models/db.js');
@@ -53,7 +54,8 @@
 // Rotas
 
     app.use(router);                                                // (dev) Usar prefixos depois, exemplo app.use('/main', router);
-    app.use('/admin', router_adm)                                             // (dev) Exemplo app.use('/admin', router_adm);
+    app.use('/admin', router_adm);                                             // (dev) Exemplo app.use('/admin', router_adm);
+    app.use(routes_users);
 
 // Outros
 
