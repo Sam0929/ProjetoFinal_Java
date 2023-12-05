@@ -22,7 +22,7 @@ function checkIfTableExists() {
         
             .then (tables => {
             
-            if (tables.includes(Users)) {
+            if (tables.includes('users')) {
                 Users.sync();
                 console.log('Tabela sincronizada com sucesso.');
             } else {
