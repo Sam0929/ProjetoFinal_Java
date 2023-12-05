@@ -32,6 +32,7 @@ const routes_users = require('./routes/user');
             res.locals.error_msg = req.flash("error_msg");
             next();
         });
+        
     // Handlebars
 
         const hbs = handlebars.create({

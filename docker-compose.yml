@@ -11,7 +11,6 @@ services:
       - ./node_app:/usr/app  # Mapeie o diretório do host para o diretório do contêiner
     depends_on:
       - db  # Garanta que o contêiner do MySQL esteja pronto antes de iniciar o aplicativo Node.js
-      - ubuntu-container
 
   db:
     image: mysql:8.0
@@ -31,8 +30,3 @@ services:
     ports:
       - "3306:3306"  # Mapeie a porta do container para a porta do host
 
-  ubuntu-container:
-    image: ubuntu:latest
-    command: /bin/bash
-    stdin_open: true
-    tty: true

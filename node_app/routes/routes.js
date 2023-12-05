@@ -1,133 +1,20 @@
 const express = require ('express');
 const router = express.Router();
-const { body, validationResult } = require('express-validator');
-const bcrypt = require ('bcrypt');
-const jwt = require ('jsonwebtoken');
-const User = require('../models/User');
+const userController = require('../controllers/userController');
 var cookieParser = require('cookie-parser');
+
 
 router.use (cookieParser());
 
-router.get('/', (req, res) => {
+router.get('/', userController.home);
 
-    res.render('home');
-});
+router.get('/register', userController.register);
 
-router.get('/register', (req, res) => {
-  
-     res.render('signup');
-  });
+router.get('/login', userController.login);
 
-router.post('/auth/register', [
-    
-    body('name').notEmpty().withMessage('O campo Nome é obrigatório'),
-    body('email').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
-    body('password').notEmpty().withMessage('A senha não pode estar vazia!').isLength({ min: 8}).withMessage('A senha deve ter no mínimo 8 caracteres!'),
+router.post('/auth/register', userController.authregister);
 
-  ],
+router.post('/auth/login', userController.authlogin);
 
-  async(req, res) => 
-  
-  {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      // Se houver erros de validação, renderize a página do formulário novamente com os erros
-      return res.render('signup', { errors: errors.array() });                              //Em desenvolvimento
-    } 
-
-    const {name, email, password, confirmpassword} = req.body;
-
-    if(password != confirmpassword){
-      return res.render('signup', {errors: [{msg: 'As senhas não conferem!'}]});
-    }
-
-    // Verifique se o usuário com o mesmo e-mail já existe no banco de dados
-    let userExist = await User.findOne({where: {email : email}});
-
-    if(userExist){
-      return res.render('signup', {errors: [{msg: 'O e-mail já está em uso!'}]});
-    }
-
-    // Create password
-
-    const salt = await bcrypt.genSalt(12);
-    const passwordHash = await bcrypt.hash(password, salt);
-
-    // Create user
-
-    User.create({
-      name: name,
-      email: email,
-      password: passwordHash,
-    })
-      .then(() =>{
-        req.flash('success_msg', 'Usuário criado com sucesso!');
-        res.redirect('/register');
-      })
-      .catch((erro) => {
-        req.flash('error_msg', 'Erro ao criar o usuário!');
-        res.redirect('/register');
-      });
-    
-});
-
-router.get('/login', (req, res) => {
-
-    res.render("login");
-});
-
-
-router.post('/auth/login', [
-  
-  body('email').notEmpty().withMessage('O campo Sobrenome é obrigatório'),
-  body('password').notEmpty().withMessage('A senha não pode estar vazia!').isLength({ min: 8}).withMessage('A senha deve ter no mínimo 8 caracteres!'),
-
-],
-
-async(req, res) => 
-
-{
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    // Se houver erros de validação, renderize a página do formulário novamente com os erros
-    return res.render('login', { errors: errors.array() });                              
-  } 
-
-  const {email, password} = req.body;
-
-  // Verifique se o usuário com o mesmo e-mail já existe no banco de dados
-  const user = await User.findOne({where: {email : email}});
-
-  if(!user){
-    return res.render('login', {errors: [{msg: 'Este usuário não existe!'}]});
-  }
-
-  const checkPassword = await bcrypt.compare(password, user.password)
-  if(!checkPassword){
-    return res.render('login', {errors: [{msg: 'As senhas não conferem!'}]});
-  }
-
-  try{
-    const secret = process.env.SECRET;                                                   //Em desenvolvimento
-
-    const token = jwt.sign(
-
-    {
-      id: user._id,
-    },
-    secret,
-    
-    );
-    req.flash('success_msg', 'Autenticação realizada com sucesso!');
-
-    res.cookie('token', token, { httpOnly: true, secure: true });
-  }
-  catch (err) {
-    return res.render('login', {errors: errors.array() });
-  }
-  
-});
 
 module.exports = router;
