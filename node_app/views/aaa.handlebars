@@ -1,0 +1,53 @@
+<body>
+                                                                                                      {{!-- teste --}}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Saldo Atual</h5>
+                        <p class="card-text">R$ 1.000,00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Últimas Compras</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">Compra 1 - R$ 100,00</li>
+                            <li class="list-group-item">Compra 2 - R$ 50,00</li>
+                            <li class="list-group-item">Compra 3 - R$ 75,00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Adicionar Saldo</h5>
+                        <form>
+                            <div class="form-group">
+                                <label for="amount">Valor</label>
+                                <input type="number" class="form-control" id="amount" placeholder="Digite o valor">
+                            </div>
+                            <div class = "d-flex mt-4 ">
+                                <button type="submit" class="btn btn-primary">Adicionar Saldo</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Resumo de Compras</h5>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

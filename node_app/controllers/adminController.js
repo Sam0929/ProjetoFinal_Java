@@ -35,6 +35,7 @@ exports.add = async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword,
+            role: req.body.role
         });
 
         req.flash('success_msg', 'Usuário criado com sucesso!');
@@ -53,7 +54,7 @@ exports.edit = (req, res) => {
                 req.flash('error_msg', 'ID de usuário não encontrado');
                 return res.redirect('/admin/users');
             }
-            res.render('./admins/edit_users', { user: user });
+            res.render('edit_profile', { user: user });
         })
         .catch((erro) => {
             req.flash('error_msg', 'Erro ao buscar o usuário!');
@@ -73,7 +74,7 @@ exports.update = async (req, res) => {
 
       if (!errors.isEmpty()) {
           // Se houver erros de validação, renderize a página do formulário novamente com os erros
-          return res.render('./admins/edit_users', { errors: errors.array() });
+          return res.render('edit_profile', { errors: errors.array() });
       }
 
       const user = await User.findOne({ where: { id: req.body.id } });
@@ -83,9 +84,12 @@ exports.update = async (req, res) => {
           return res.redirect('/admin/users');
       }
 
+      const salt = await bcrypt.genSalt(12);
+      const passwordHash = await bcrypt.hash(req.body.password, salt);
+
       user.name = req.body.name;
       user.email = req.body.email;
-      user.password = req.body.password;
+      user.password = passwordHash;
 
       user.save()
           .then(() => {

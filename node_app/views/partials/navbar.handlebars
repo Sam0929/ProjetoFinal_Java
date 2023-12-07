@@ -8,9 +8,15 @@
       <li class="nav-item">
         <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
       </li>
+
+      {{#ifRole user 'admin'}}
+      <!-- Código para usuários administradores -->
       <li class="nav-item">
         <a class="nav-link" href="/admin/users">Usuários</a>
       </li>
+
+      {{/ifRole}}
+
       {{#ifLoggedIn user}}
         <!-- Usuário logado -->
       <li class="nav-item dropdown">
@@ -18,7 +24,7 @@
           {{ user.dataValues.name }}
       </a>
       <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/userinfo">
+          <a class="dropdown-item" href="/user/profile">
               Informações pessoais
           </a>
           <a class="dropdown-item" href="/logout">

@@ -11,9 +11,12 @@
     const dotenv = require('dotenv');
     const { req_user } = require('./middleware/user.js');
     require('./middleware/passport')(passport);
+// Banco de dados
 
     require('./models/db.js');
     require('./models/User.js');
+
+//
     dotenv.config();
     const app = express();
 
@@ -52,6 +55,9 @@
             helpers: {
                 ifLoggedIn: function (user, options) {
                     return user ? options.fn(this) : options.inverse(this);
+                },
+                ifRole: function (user, role, options) {
+                    return user && user.role === role ? options.fn(this) : options.inverse(this);
                 }
             }
         });
@@ -72,6 +78,10 @@
         app.use(router);                                                // (dev) Usar prefixos depois, exemplo app.use('/main', router);
         app.use('/admin', router_adm);                                             // (dev) Exemplo app.use('/admin', router_adm);
         
+    // Migration
+
+        const initializeApp = require('./migrations/admin.js');
+        initializeApp();    
 
     // Outros
         const PORT = 3000;

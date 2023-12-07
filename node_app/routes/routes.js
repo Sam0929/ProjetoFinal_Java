@@ -15,5 +15,14 @@ router.post('/auth/login', forwardAuthenticated, userController.authlogin);
 
 router.get('/logout', ensureAuthenticated, userController.logout);
 
+router.get('/user/profile', ensureAuthenticated, userController.profile);
+
+router.get('/user/edit', ensureAuthenticated, userController.edit);
+
+router.post('/user/update', ensureAuthenticated, userController.update);
+
+router.get('/aaa', (req, res) => {                          //rota teste
+    res.render('aaa');
+});
 module.exports = router;
 
