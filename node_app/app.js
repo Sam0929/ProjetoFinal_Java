@@ -3,14 +3,14 @@
     const express = require ('express');
     const handlebars = require('express-handlebars');
     const bodyParser = require('body-parser');
+    const passport = require('passport');
     const router = require('./routes/routes');
     const router_adm = require ('./routes/admin');
     const session = require('express-session');
     const flash = require('connect-flash');
-    const cookie = require('cookie-parser');
     const dotenv = require('dotenv');
-    const path = require('path');
-   
+    const { req_user } = require('./middleware/user.js');
+    require('./middleware/passport')(passport);
 
     require('./models/db.js');
     require('./models/User.js');
@@ -19,21 +19,30 @@
 
 // Configurações
    
-    // Session
-        app.use(session({
-            secret: "qualquercoisa",
-            resave: true,
+     // Express and Passport Session
+    
+        app.use(express.urlencoded({ extended: true }));
+        app.use(session({ 
+            secret: 'secretpass', 
+            resave: true, 
             saveUninitialized: true
-        }));
+            })
+        );
+        app.use(passport.initialize());
+        app.use(passport.session());
+        
+    // Middleware
         app.use(flash());
 
-    // Middleware
-        
         app.use((req, res, next) => {
             res.locals.success_msg = req.flash("success_msg");              //locals, variáveis globais
             res.locals.error_msg = req.flash("error_msg");
+            res.locals.error = req.flash("error");
             next();
         });
+
+        app.use(req_user);
+       
         
     // Handlebars
 
@@ -56,26 +65,18 @@
 
     // Public
 
-        app.use(express.static('views'));                          // Middleware para arquivos estáticos, como css, js, imagens, etc.
+        app.use(express.static('views'));                          // Middleware para arquivos estáticos, como css, js, imagens, etc
 
+    // Rotas
 
-    
-    app.use(cookie());                                          // Middleware para cookies
-
-    app.use(express.json());                                       // Middleware para resgatar dados do front-end // Formulários, req.body.(nome_do_input);
+        app.use(router);                                                // (dev) Usar prefixos depois, exemplo app.use('/main', router);
+        app.use('/admin', router_adm);                                             // (dev) Exemplo app.use('/admin', router_adm);
         
 
-// Rotas
-
-    app.use(router);                                                // (dev) Usar prefixos depois, exemplo app.use('/main', router);
-    app.use('/admin', router_adm);                                             // (dev) Exemplo app.use('/admin', router_adm);
-    
-
-// Outros
-
-    const PORT = 3000;
-    app.listen(PORT, () => {
-        console.log('Servidor rodando na porta ' + PORT);
-    });
-         
-           
+    // Outros
+        const PORT = 3000;
+        app.listen(PORT, () => {
+            console.log('Servidor rodando na porta ' + PORT);
+        });
+            
+            

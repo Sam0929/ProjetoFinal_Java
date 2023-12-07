@@ -14,23 +14,17 @@
       {{#ifLoggedIn user}}
         <!-- Usuário logado -->
       <li class="nav-item dropdown">
-      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+      <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ user.dataValues.name }}
       </a>
       <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/userinfo">
-              {{ __('Informações Pessoais') }}
+              Informações pessoais
           </a>
           <a class="dropdown-item" href="/logout">
-              {{ __('Sair') }}
+              Logout
           </a>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
-        <li class="nav-item">
-        <span class="nav-link">Bem-vindo, {{user.dataValues.name}}</span>
-        </li>
-       
+      </div>
       {{else}}
         <!-- Usuário não logado -->
         <li class="nav-item">

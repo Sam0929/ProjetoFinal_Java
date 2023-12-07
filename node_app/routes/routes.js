@@ -1,21 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-const loggedIn = require('../middleware/loggedin'); // Fix the casing of the import
+const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/auth');
 
 router.get('/', userController.home);
 
-router.get('/register', userController.register);
+router.get('/register', forwardAuthenticated, userController.register);
 
-router.get('/login', userController.login);
+router.get('/login', forwardAuthenticated, userController.login);
 
-router.post('/auth/register', userController.authregister);
+router.post('/auth/register', forwardAuthenticated, userController.authregister);
 
-router.post('/auth/login', userController.authlogin);
+router.post('/auth/login', forwardAuthenticated, userController.authlogin);
 
-router.get('/teste', loggedIn, userController.teste);
-
-router.get('/logout', userController.logout);
+router.get('/logout', ensureAuthenticated, userController.logout);
 
 module.exports = router;
 
