@@ -1,10 +1,7 @@
-const express = require ('express');
+const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-var cookieParser = require('cookie-parser');
-
-
-router.use (cookieParser());
+const loggedIn = require('../middleware/loggedin'); // Fix the casing of the import
 
 router.get('/', userController.home);
 
@@ -16,5 +13,9 @@ router.post('/auth/register', userController.authregister);
 
 router.post('/auth/login', userController.authlogin);
 
+router.get('/teste', loggedIn, userController.teste);
+
+router.get('/logout', userController.logout);
 
 module.exports = router;
+

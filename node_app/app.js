@@ -7,15 +7,18 @@
     const router_adm = require ('./routes/admin');
     const session = require('express-session');
     const flash = require('connect-flash');
+    const cookie = require('cookie-parser');
+    const dotenv = require('dotenv');
+    const path = require('path');
    
 
     require('./models/db.js');
     require('./models/User.js');
-    require('dotenv').config();
+    dotenv.config();
     const app = express();
 
 // Configurações
-
+   
     // Session
         app.use(session({
             secret: "qualquercoisa",
@@ -36,7 +39,12 @@
 
         const hbs = handlebars.create({
             
-            defaultLayout: 'main'
+            defaultLayout: 'main',
+            helpers: {
+                ifLoggedIn: function (user, options) {
+                    return user ? options.fn(this) : options.inverse(this);
+                }
+            }
         });
         app.engine('handlebars', hbs.engine);                       // É uma linguagem templating para exibir um mesmo layout para diferentes views.
         app.set('view engine', 'handlebars');
@@ -49,6 +57,12 @@
     // Public
 
         app.use(express.static('views'));                          // Middleware para arquivos estáticos, como css, js, imagens, etc.
+
+
+    
+    app.use(cookie());                                          // Middleware para cookies
+
+    app.use(express.json());                                       // Middleware para resgatar dados do front-end // Formulários, req.body.(nome_do_input);
         
 
 // Rotas

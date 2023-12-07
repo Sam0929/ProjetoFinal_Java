@@ -16,6 +16,7 @@ exports.login = (req, res) => {
 };
 
 exports.authregister = async (req, res) => {
+
     try {
         // Manualmente define as regras de validação
         await body('name').notEmpty().withMessage('O campo Nome é obrigatório').run(req);
@@ -96,22 +97,38 @@ exports.authlogin = async (req, res) => {
         }
         
         try {
-            const secret = process.env.SECRET; // Em desenvolvimento
-        
-            const token = jwt.sign(
-                { id: user._id },
-                secret,
-            );
-            
-            req.flash('success_msg', 'Autenticação realizada com sucesso!');
-        
-            res.cookie('token', token, { httpOnly: true, secure: true });
+            const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: '1h' });
+            const cookieOptions = {
+                expires: new Date(
+                    Date.now() + 1 * 60 * 60 * 1000
+                ),
+                httpOnly: true
+            };
+            res.cookie('userSave', token, cookieOptions);
+            req.flash('success_msg', 'Login efetuado com sucesso!');
+            res.redirect('/login');
+           
         } catch (err) {
+            console.error(err);
             return res.render('login', { errors: errors.array() });
         }
+        
     } catch (error) {
         console.error(error);
         req.flash('error_msg', 'Erro ao efetuar o login!');
         res.redirect('/login');
     }
+};
+
+exports.logout = (req, res) => {
+    res.cookie('userSave', 'logout', {
+        expires: new Date(Date.now() + 2 * 1000),
+        httpOnly: true
+    });
+    res.status(200).redirect("/");
+}
+
+exports.teste = (req, res) => {
+    const user = req.user;
+    res.render('home', { user });
 };
