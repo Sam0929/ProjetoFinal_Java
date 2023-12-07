@@ -7,9 +7,6 @@ WORKDIR /usr/app
 # Copie o arquivo package.json e package-lock.json para o diretório de trabalho
 COPY package*.json ./
 
-# Instale as dependências do Node.js
-RUN npm install
-
 # Copie todo o código fonte da sua aplicação para o diretório de trabalho
 COPY . .
 
@@ -20,4 +17,4 @@ RUN npm install -g nodemon
 EXPOSE 3000
 
 # Comando para iniciar a aplicação Node.js
-CMD ["sh", "-c", "npm install && nodemon -L index.js"]
+CMD ["sh", "-c", "npm install && nodemon -L app.js"]
