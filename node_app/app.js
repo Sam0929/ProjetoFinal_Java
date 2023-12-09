@@ -4,8 +4,10 @@
     const handlebars = require('express-handlebars');
     const bodyParser = require('body-parser');
     const passport = require('passport');
-    const router = require('./routes/routes');
+    const router_users = require('./routes/router_users');
     const router_adm = require ('./routes/admin');
+    const router_auth = require('./routes/auth');
+    const router_home = require('./routes/home');
     const session = require('express-session');
     const flash = require('connect-flash');
     const dotenv = require('dotenv');
@@ -53,9 +55,7 @@
             
             defaultLayout: 'main',
             helpers: {
-                ifLoggedIn: function (user, options) {
-                    return user ? options.fn(this) : options.inverse(this);
-                },
+                
                 ifRole: function (user, role, options) {
                     return user && user.role === role ? options.fn(this) : options.inverse(this);
                 }
@@ -75,8 +75,10 @@
 
     // Rotas
 
-        app.use(router);                                                // (dev) Usar prefixos depois, exemplo app.use('/main', router);
+        app.use('/user', router_users);                                                // (dev) Usar prefixos depois, exemplo app.use('/main', router);
         app.use('/admin', router_adm);                                             // (dev) Exemplo app.use('/admin', router_adm);
+        app.use(router_auth);
+        app.use(router_home);
         
     // Migration
 
