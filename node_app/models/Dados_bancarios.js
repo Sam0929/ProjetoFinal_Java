@@ -1,28 +1,18 @@
 const { sequelize } = require('./db.js');
 const db = require('./db.js');
-const Dbanco = require ('./Dados_bancarios.js');
 
-const Users = db.sequelize.define('users', {
+const Dbanco = db.sequelize.define('dbanco', {
 
-    name: {
+    balance: {
+        type: db.Sequelize.FLOAT
+    },
+    stock: {
         type: db.Sequelize.STRING
     },
-    email: {
-        type: db.Sequelize.STRING
+    user_id: {
+        type: db.Sequelize.INTEGER
     },
-    password: {
-        type: db.Sequelize.STRING
-    },
-    role: {
-        type: db.Sequelize.STRING
-    }
 });
-
-Users.hasOne(Dbanco, {foreignKey: 'user_id', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
-Dbanco.belongsTo(Users, {foreignKey: 'user_id', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
-
-
-
 
 function checkIfTableExists() {
     try {
@@ -31,18 +21,17 @@ function checkIfTableExists() {
         
             .then (tables => {
             
-            if (tables.includes('users')) {
-                Users.sync();
+            if (tables.includes('dbanco')) {
+                Dbanco.sync();
                 console.log('Tabela sincronizada com sucesso.');
             } else {
                 // Se a tabela não existir, cria a tabela
-                Users.sync({ force: true });
+                Dbanco.sync({ force: true });
                 console.log('Tabela criada com sucesso.');
             }
         });
 
        
-        
     } catch (error) {
         console.error('Erro ao verificar/sincronizar a tabela:', error);
     }
@@ -50,4 +39,6 @@ function checkIfTableExists() {
 
 checkIfTableExists();
 
-module.exports = Users;
+
+
+module.exports = Dbanco;
