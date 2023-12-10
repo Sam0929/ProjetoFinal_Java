@@ -1,17 +1,19 @@
 const express = require('express');
-const router = express.Router();
+const router_users = express.Router();
 const userController = require('../controllers/userController');
 const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/auth');
 
-router.get('/logout', ensureAuthenticated, userController.logout);
+router_users.get('/logout', ensureAuthenticated, userController.logout);
 
-router.get('/profile', ensureAuthenticated, userController.profile);
+router_users.get('/home', ensureAuthenticated, userController.home);
 
-router.get('/edit', ensureAuthenticated, userController.edit);
+router_users.get('/profile', ensureAuthenticated, userController.profile);
 
-router.post('/update', ensureAuthenticated, userController.update);
+router_users.get('/edit', ensureAuthenticated, userController.edit);
 
-router.get('/investimentos', ensureAuthenticated, userController.investimentos);
+router_users.post('/update', ensureAuthenticated, userController.update);
 
-module.exports = router;
+router_users.get('/investimentos', ensureAuthenticated, userController.investimentos);
+
+module.exports = router_users;
 

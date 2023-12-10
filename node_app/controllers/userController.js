@@ -51,6 +51,10 @@ exports.update = async (req, res) =>{
 
 }
 
+exports.home = (req, res) => {
+    res.render('home_user', {layout: false});
+};
+
 
 exports.logout = (req, res) => {
 

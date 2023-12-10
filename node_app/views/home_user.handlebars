@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../public/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="../public/img/logo.png">
+                    <h2><span>coinclip</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <a href="/user/home" class="active">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    <h3>Entradas</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">do_not_disturb_on</span>
+                    <h3>Saídas</h3>
+                </a>
+                <a href="/user/profile">
+                    <span class="material-symbols-outlined">manage_accounts</span>
+                    <h3>Configurações</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">add_shopping_cart</span>
+                    <h3>Adicionar Lançamento</h3>
+                </a>
+                <a href="/user/logout">
+                    <span class="material-symbols-outlined">logout</span>
+                    <h3>Sair</h3>
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            <h1>Dashboard</h1>
+
+            <div class="date">
+                <input type="date">
+            </div>
+
+            <div class="insights">
+                <div class="balance">
+                    <span class="material-symbols-outlined">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Balanço</h3>
+                            <h1>valor</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 horas</small>
+                </div>
+
+                <div class="incomes">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Entradas</h3>
+                            <h1>valor</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>20%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 horas</small>
+                </div>
+
+                <div class="expenses">
+                    <span class="material-symbols-outlined">trending_down</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Gastos</h3>
+                            <h1>valor</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>70%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 horas</small>
+                </div>
+            </div>
+
+            <div class="orders">
+                <h2>Lançamentos Recentes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Example</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                            <td>R$80,00</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Example</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                            <td>R$80,00</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Example</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                            <td>R$80,00</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Example</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                            <td>R$80,00</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                        <tr>
+                            <td>Example</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                            <td>R$80,00</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="#">Show All</a>
+            </div>
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-button">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">light_mode</span>
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Olá, <b>Amanda</b></p>
+                        <small class="text-muted">{{user.dataValues.role}}</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../public/img/photo.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="investor">
+                <h2>Mercado de Ações</h2>
+                <div class="item">
+                    <div class="icon">
+                        <span class="material-symbols-outlined success">arrow_upward</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Bitcoin</h3>
+                            <small class="text-muted">Últimas 24 horas</small>
+                        </div>
+                        <h5 class="success">+30%</h5>
+                        <h3>60,000</h3>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="icon">
+                        <span class="material-symbols-outlined danger">arrow_downward</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Bitcoin</h3>
+                            <small class="text-muted">Últimas 24 horas</small>
+                        </div>
+                        <h5 class="danger">-15%</h5>
+                        <h3>60,000</h3>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="icon">
+                        <span class="material-symbols-outlined success">arrow_upward</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Bitcoin</h3>
+                            <small class="text-muted">Últimas 24 horas</small>
+                        </div>
+                        <h5 class="success">+10%</h5>
+                        <h3>60,000</h3>
+                    </div>
+                </div>
+                <div class="item add-stock">
+                    <span class="material-symbols-outlined">add</span>
+                    <h3>Adicionar Ação</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

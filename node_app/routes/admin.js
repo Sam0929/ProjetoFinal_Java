@@ -1,19 +1,19 @@
 const express = require ("express");
-const router = express.Router();
+const router_admin = express.Router();
 const adminController = require('../controllers/adminController');
 const { ensureAdmin } = require('../middleware/auth');
 
-router.get('/users', ensureAdmin, adminController.getUsers);
+router_admin.get('/users', ensureAdmin, adminController.getUsers);
 
-router.get('/cad', ensureAdmin, adminController.form);
+router_admin.get('/cad', ensureAdmin, adminController.form);
 
-router.post('/add', ensureAdmin, adminController.add);
+router_admin.post('/add', ensureAdmin, adminController.add);
 
-router.get('/editar/:id', ensureAdmin, adminController.edit);
+router_admin.get('/editar/:id', ensureAdmin, adminController.edit);
 
-router.post('/update', ensureAdmin, adminController.update);
+router_admin.post('/update', ensureAdmin, adminController.update);
 
-router.get('/deletar/:id', ensureAdmin, adminController.delete);
+router_admin.get('/deletar/:id', ensureAdmin, adminController.delete);
 
 
-module.exports = router;
+module.exports = router_admin;

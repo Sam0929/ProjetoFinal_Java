@@ -11,6 +11,7 @@
     const session = require('express-session');
     const flash = require('connect-flash');
     const dotenv = require('dotenv');
+    const path = require('path');
     const { req_user } = require('./middleware/user.js');
     require('./middleware/passport')(passport);
 // Banco de dados

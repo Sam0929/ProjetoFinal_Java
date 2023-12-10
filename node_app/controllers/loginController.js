@@ -20,7 +20,7 @@ exports.authlogin = async (req, res, next) => {
     }
   
     passport.authenticate('local', {
-      successRedirect: '/',
+      successRedirect: '/user/home',
       failureRedirect: '/login',
       failureFlash: true
     })(req, res, next);
