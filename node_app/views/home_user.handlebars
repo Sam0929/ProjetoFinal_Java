@@ -174,8 +174,12 @@
                 </div>
                 <div class="profile">
                     <div class="info">
-                        <p>Olá, <b>Amanda</b></p>
-                        <small class="text-muted">{{user.dataValues.role}}</small>
+                        <p>Olá, <b>{{user.dataValues.name}}</b></p>
+                        {{#ifRole user 'admin'}}
+                            <small class="text-muted">Administrador</small>
+                        {{else}}
+                            <small class="text-muted">Cliente</small>
+                        {{/ifRole}}
                     </div>
                     <div class="profile-photo">
                         <img src="../public/img/photo.png" alt="">
@@ -185,45 +189,34 @@
 
             <div class="investor">
                 <h2>Mercado de Ações</h2>
-                <div class="item">
-                    <div class="icon">
-                        <span class="material-symbols-outlined success">arrow_upward</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>Bitcoin</h3>
-                            <small class="text-muted">Últimas 24 horas</small>
+                {{#if data}}
+                    {{#each data}}
+                        <div class="item">
+                            <div class="icon">
+                                {{#if (gt changesPercentage 0)}}
+                                    <span class="material-symbols-outlined success">arrow_upward</span>
+                                {{else}}
+                                    <span class="material-symbols-outlined danger">arrow_downward</span>
+                                {{/if}}
+                            </div>
+                            <div class="right">
+                                <div class="info">
+                                    <h3>{{symbol}}</h3>
+                                    <small class="text-muted">Últimas 24 horas</small>
+                                </div>
+                                {{#if (gt changesPercentage 0)}}
+                                    <h5 class="success">{{changesPercentage}}</h5>
+                                {{else}}
+                                    <h5 class="danger">{{changesPercentage}}</h5>
+                                {{/if}}
+                                <h3>{{price}}</h3>
+                            </div>
                         </div>
-                        <h5 class="success">+30%</h5>
-                        <h3>60,000</h3>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="icon">
-                        <span class="material-symbols-outlined danger">arrow_downward</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>Bitcoin</h3>
-                            <small class="text-muted">Últimas 24 horas</small>
-                        </div>
-                        <h5 class="danger">-15%</h5>
-                        <h3>60,000</h3>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="icon">
-                        <span class="material-symbols-outlined success">arrow_upward</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>Bitcoin</h3>
-                            <small class="text-muted">Últimas 24 horas</small>
-                        </div>
-                        <h5 class="success">+10%</h5>
-                        <h3>60,000</h3>
-                    </div>
-                </div>
+                    {{/each}}
+                {{else}}
+                    <p>No data available.</p>
+                {{/if}}
+                
                 <div class="item add-stock">
                     <span class="material-symbols-outlined">add</span>
                     <h3>Adicionar Ação</h3>
@@ -231,6 +224,16 @@
             </div>
         </div>
     </div>
+    <script>
+        const themeToggler = document.querySelector(".theme-toggler");
+
+        //change theme
+        themeToggler.addEventListener('click', ()=>{
+            document.body.classList.toggle('dark-theme-variables');
+            themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
+            themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
+        })
+    </script>
 </body>
 </html>
 

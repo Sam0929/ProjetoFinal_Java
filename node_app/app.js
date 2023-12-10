@@ -59,7 +59,14 @@
                 
                 ifRole: function (user, role, options) {
                     return user && user.role === role ? options.fn(this) : options.inverse(this);
-                }
+                },
+
+                eq: (v1, v2) => v1 === v2,
+                ne: (v1, v2) => v1 !== v2,
+                lt: (v1, v2) => v1 < v2,
+                gt: (v1, v2) => v1 > v2,
+                lte: (v1, v2) => v1 <= v2,
+                gte: (v1, v2) => v1 >= v2
             }
         });
         app.engine('handlebars', hbs.engine);                       // É uma linguagem templating para exibir um mesmo layout para diferentes views.

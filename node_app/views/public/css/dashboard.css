@@ -25,6 +25,15 @@
     --box-shadow: 0 2rem 3rem var(--color-light);
 }
 
+.dark-theme-variables {
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-dark-variant: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -52,6 +61,7 @@ body {
 
 .container {
     width: 96%;
+    height: 100vh;
     display: grid;
     margin: 0 auto;
     gap: 1.8rem;
@@ -70,14 +80,17 @@ img {
 h1 {
     font-weight: 800;
     font-size: 1.8rem;
+    color: var(--color-dark);
 }
 
 h2 {
     font-size: 1.4rem;
+    color: var(--color-dark);
 }
 
 h3 {
     font-size: 0.87rem;
+    color: var(--color-dark);
 }
 
 h4 {
