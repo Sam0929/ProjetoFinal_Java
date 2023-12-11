@@ -99,6 +99,14 @@
           </div>
           </form>
 
+            {{#if success_msg}}
+        
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Sucesso!</strong> {{success_msg}}
+                </div>
+              
+            {{/if}}
+
           <form class="sign-up" action="/auth/register" method="POST" autocomplete="off">
           <div class="logo">
             <img src="../public/img/logo.png" alt="">

@@ -17,11 +17,12 @@ const Users = db.sequelize.define('users', {
         type: db.Sequelize.STRING
     },
     stokes: {
-        type: db.Sequelize.STRING, allowNull: false
+        type: db.Sequelize.STRING, allowNull: true,
+        defaultValue: 'NA'
     }
 });
 
-Users.hasOne(Dbanco, {foreignKey: 'user_id', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
+Users.hasMany(Dbanco, {foreignKey: 'user_id', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
 Dbanco.belongsTo(Users, {foreignKey: 'user_id', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade'});
 
 

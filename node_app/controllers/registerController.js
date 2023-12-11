@@ -1,7 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const bcrypt = require ('bcrypt');
 const User = require('../models/User');
-const passport = require('passport');
 const Dbanco = require ('../models/Dados_bancarios.js');
 
 exports.register = (req, res) => {
@@ -61,10 +60,10 @@ exports.authregister = async (req, res) => {
 
         console.log('Usuário e Dbanco criados com sucesso!');
         req.flash('success_msg', 'Usuário criado com sucesso!');
-        res.redirect('/');
+        res.redirect('/login');
     } catch (error) {
         console.error(error);
         req.flash('error_msg', 'Erro ao criar o usuário!');
-        res.redirect('/admin/users');
+        res.redirect('/login');
     }
 };

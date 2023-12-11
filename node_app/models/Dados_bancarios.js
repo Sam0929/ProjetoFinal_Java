@@ -1,7 +1,7 @@
 const { sequelize } = require('./db.js');
 const db = require('./db.js');
 
-const Dbanco = db.sequelize.define('dbanco', {
+const Dbanco = db.sequelize.define('dbancos', {
 
     transation_type: {
         type: db.Sequelize.BOOLEAN
@@ -21,7 +21,7 @@ function checkIfTableExists() {
         
             .then (tables => {
             
-            if (tables.includes('dbanco')) {
+            if (tables.includes('dbancos')) {
                 Dbanco.sync();
                 console.log('Tabela sincronizada com sucesso.');
             } else {

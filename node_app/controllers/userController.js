@@ -1,7 +1,5 @@
 const { body, validationResult } = require('express-validator');
 const bcrypt = require ('bcrypt');
-const User = require('../models/User');
-const passport = require('passport');
 // const fetch = require('node-fetch').default || require('node-fetch');
 
 exports.profile = (req, res) => {
