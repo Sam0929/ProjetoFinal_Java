@@ -37,7 +37,7 @@ function checkIfTableExists() {
             
             if (tables.includes('users')) {
                 Users.sync();
-                console.log('Tabela sincronizada com sucesso.');
+                console.log('Tabela users sincronizada com sucesso.');
             } else {
                 // Se a tabela não existir, cria a tabela
                 Users.sync({ force: true });

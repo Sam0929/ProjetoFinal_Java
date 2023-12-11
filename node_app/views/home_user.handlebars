@@ -128,39 +128,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Example</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
-                            <td>R$80,00</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Example</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
-                            <td>R$80,00 {{data.dataValues.value}}</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Example</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
-                            <td>R$80,00</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Example</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
-                            <td>R$80,00</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        <tr>
-                            <td>Example</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
-                            <td>R$80,00</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
+
+                        {{#each data_transactions}}
+                            <tr>
+                                <td>{{dataValues.name}}</td>
+                                <td>{{dataValues.description}}</td>
+                                <td>R${{dataValues.value}}</td>
+                                <td class="primary">Detalhes</td>
+                            </tr>
+                        {{/each}}
+                
                     </tbody>
                 </table>
-                <a href="#">Show All</a>
+                <a href="/user/transacoes">Adicionar transacao</a>
             </div>
         </main>
 
@@ -225,13 +205,6 @@
             </div>
         </div>
     </div>
-
-    {{#each data_transactions}}
-        <li>
-            <p>Tipo de Transação: {{dataValues.transation_type}}</p>            {{!--    EXIBINDO TRANSAÇÕES NA HOME BACK FEITO, FALTA O FRONT --}}
-            <p>Valor: {{dataValues.value}}</p>
-        </li>
-    {{/each}}
     <script>
         const themeToggler = document.querySelector(".theme-toggler");
 

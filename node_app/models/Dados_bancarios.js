@@ -3,8 +3,11 @@ const db = require('./db.js');
 
 const Dbanco = db.sequelize.define('dbancos', {
 
-    transation_type: {
-        type: db.Sequelize.BOOLEAN
+    name: {
+        type: db.Sequelize.STRING
+    },
+    description: {
+        type: db.Sequelize.STRING
     },
     value: {
         type: db.Sequelize.FLOAT
@@ -12,7 +15,7 @@ const Dbanco = db.sequelize.define('dbancos', {
     user_id: {
         type: db.Sequelize.INTEGER
     },
-});
+});   
 
 function checkIfTableExists() {
     try {
@@ -23,7 +26,7 @@ function checkIfTableExists() {
             
             if (tables.includes('dbancos')) {
                 Dbanco.sync();
-                console.log('Tabela sincronizada com sucesso.');
+                console.log('Tabela dbancos sincronizada com sucesso.');
             } else {
                 // Se a tabela não existir, cria a tabela
                 Dbanco.sync({ force: true });

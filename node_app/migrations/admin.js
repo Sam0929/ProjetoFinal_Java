@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Dbanco = require('../models/Dados_bancarios');
 const bcrypt = require('bcrypt');
 
 const initializeApp = async () => {
@@ -9,12 +10,31 @@ const initializeApp = async () => {
       if (!existingUser) {
         // Se não existir, crie o usuário inicial
         const hashedPassword = await bcrypt.hash('1234', 10);
-        await User.create({
+
+        const newUser = await User.create({
           name: 'Samuel',
           email: 'vaninisamuel1324@gmail.com',
           password: hashedPassword,
           role: 'admin'
         });
+
+        let userId = newUser.dataValues.id;
+        
+        await Dbanco.create({
+            name: 'Salário',
+            description: 'Salário do mês de abril',
+            value: 1000,
+            user_id: userId
+        });
+
+        await Dbanco.create({
+            name: 'Aluguel',
+            description: 'Aluguel do mês de abril',
+            value: -500,
+            user_id: userId
+        });
+
+
   
         console.log('Usuário inicial criado com sucesso.');
       } else {

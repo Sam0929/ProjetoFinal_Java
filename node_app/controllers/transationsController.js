@@ -9,8 +9,10 @@ exports.cad = (req, res) => {
 exports.add = async (req, res) => {
     try {
         // Manualmente define as regras de validação
-        await body('transaction_type').notEmpty().withMessage('O tipo da transação é necessário!').run(req);
+        await body('name').notEmpty().withMessage('O nome da transação é necessário!').run(req);
+        await body('description').notEmpty().withMessage('A descrição da transação é necessária!').run(req);
         await body('value').notEmpty().withMessage('O campo valor é obrigatório!').run(req);
+
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -21,12 +23,13 @@ exports.add = async (req, res) => {
         const user = req.user;
 
         const userId = user.dataValues.id;
-        console.log(userId);
-        const { transaction_type, value} = req.body;
+
+        const { name, description, value } = req.body;
 
         await Dbanco.create({
 
-            transation_type: transaction_type,
+            name: name,
+            description: description,
             value: value,
             user_id: userId
         });
