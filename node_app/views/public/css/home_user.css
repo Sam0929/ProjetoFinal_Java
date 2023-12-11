@@ -374,6 +374,10 @@ main .orders table:hover {
     box-shadow: none;
 }
 
+main table thead th {
+    color: var(--color-dark);
+}
+
 main table tbody td {
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);

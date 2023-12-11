@@ -21,20 +21,20 @@ exports.authregister = async (req, res) => {
     
         if (!errors.isEmpty()) {
             // Se houver erros de validação, renderize a página do formulário novamente com os erros
-            return res.render('signup', { errors: errors.array(), formData: req.body });
+            return res.render('login', { errors: errors.array(), formData: req.body, layout: false , click: true});
         }
   
         const { name, email, password, confirmpassword } = req.body;
   
         if (password != confirmpassword) {
-            return res.render('signup', { errors: [{ msg: 'As senhas não conferem!' }], formData: req.body });
+            return res.render('login', { errors: [{ msg: 'As senhas não conferem!' }], formData: req.body, layout: false, click: true });
         }
   
         // Verifique se o usuário com o mesmo e-mail já existe no banco de dados
         let userExist = await User.findOne({ where: { email: email } });
   
         if (userExist) {
-            return res.render('signup', { errors: [{ msg: 'O e-mail já está em uso!' }], formData: req.body });
+            return res.render('login', { errors: [{ msg: 'O e-mail já está em uso!' }], formData: req.body, layout: false, click: true });
         }
   
         // Create password

@@ -9,7 +9,7 @@ exports.profile = (req, res) => {
 };
 
 exports.edit = (req, res) => {
-    res.render('edit_profile');
+    res.render('edit_profile', {layout: false});
 };
 
 exports.update = async (req, res) =>{

@@ -5,7 +5,7 @@ const passport = require('passport');
 
 
 exports.login = (req, res) => {
-    res.render("login");
+    res.render("login", {layout:false});
 };
 
 exports.authlogin = async (req, res, next) => {
@@ -16,7 +16,8 @@ exports.authlogin = async (req, res, next) => {
     const errors = validationResult(req);
   
     if (!errors.isEmpty()) {
-      return res.render('login', { errors: errors.array() });
+      console.log(errors);
+      return res.render('login', { errors: errors.array(), layout:false });
     }
   
     passport.authenticate('local', {

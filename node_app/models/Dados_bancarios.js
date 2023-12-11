@@ -3,11 +3,11 @@ const db = require('./db.js');
 
 const Dbanco = db.sequelize.define('dbanco', {
 
-    balance: {
-        type: db.Sequelize.FLOAT
+    transation_type: {
+        type: db.Sequelize.BOOLEAN
     },
-    stock: {
-        type: db.Sequelize.STRING
+    value: {
+        type: db.Sequelize.FLOAT
     },
     user_id: {
         type: db.Sequelize.INTEGER

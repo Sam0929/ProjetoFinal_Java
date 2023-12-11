@@ -15,7 +15,7 @@ module.exports = function(passport) {
         });
 
         if (!user) {
-          return done(null, false, { message: 'That email is not registered' });
+          return done(null, false, { message: 'Email não registrado' });
         }
 
         // Match password
@@ -24,7 +24,7 @@ module.exports = function(passport) {
         if (isMatch) {
           return done(null, user);
         } else {
-          return done(null, false, { message: 'Password incorrect' });
+          return done(null, false, { message: 'Senha incorreta' });
         }
       } catch (err) {
         console.error(err);

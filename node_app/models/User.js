@@ -15,6 +15,9 @@ const Users = db.sequelize.define('users', {
     },
     role: {
         type: db.Sequelize.STRING
+    },
+    stokes: {
+        type: db.Sequelize.STRING, allowNull: false
     }
 });
 

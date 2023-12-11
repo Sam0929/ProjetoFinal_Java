@@ -1,4 +1,4 @@
-<div class='container mt-5'>
+{{!-- <div class='container mt-5'>
         <div class='row justify-content-center'>
             <div class='col-md-8'>
                 <div class='card'>
@@ -39,4 +39,46 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/edit_profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <title>Editar Dados do Usuário</title>
+</head>
+<navbar>
+    
+</navbar>
+<body>
+    <div class="container">
+        <h1>Editar Dados do Usuário</h1>
+
+        {{#ifRole user 'admin'}}
+            <form action= "/admin/update/" method="POST">
+        {{else}}
+            <form action= "/user/update" method="POST">
+        {{/ifRole}}
+
+        <input type="hidden" id="id" name="id" value="{{user.dataValues.id}}">
+        <!-- Campo de Nome -->
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" value="{{user.dataValues.name}}" required>
+
+        <!-- Campo de Email -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{user.dataValues.email}}" required>
+
+        <!-- Campo de Senha -->
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+
+        <!-- Botão de Envio -->
+        <button type="submit">Salvar Alterações</button>
+        </form>
     </div>
+</body>
+</html>
