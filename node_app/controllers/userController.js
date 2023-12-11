@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const bcrypt = require ('bcrypt');
 const Dbanco = require ('../models/Dados_bancarios.js');
+const Sequelize = require('sequelize');
 // const fetch = require('node-fetch').default || require('node-fetch');
 
 exports.profile = (req, res) => {
@@ -67,6 +68,27 @@ exports.home = async (req, res) => {
   try {
 
     const data_transactions = await Dbanco.findAll({ where: { user_id: req.user.dataValues.id } });
+    const data_transactions_in = await Dbanco.findAll({ where: { user_id: req.user.dataValues.id, value: { [Sequelize.Op.gte]: 0 } } });
+    const data_transactions_out = await Dbanco.findAll({ where: { user_id: req.user.dataValues.id, value: { [Sequelize.Op.lt]: 0 }} });
+
+    const positiveTotal = data_transactions.reduce((total, transaction) => {
+      return transaction.value >= 0 ? total + transaction.value : total;
+    }, 0);
+    
+    const negativeTotal = data_transactions.reduce((total, transaction) => {
+      return transaction.value < 0 ? total + transaction.value : total;
+    }, 0);
+
+    
+      const result = await Dbanco.findOne({
+        attributes: [
+          [Sequelize.fn('SUM', Sequelize.col('value')), 'balance']
+        ],
+        where: { user_id: req.user.dataValues.id }
+      });
+    
+      const balance = result.get('balance');
+
     // const apiKey = '27Pbu8Kw18B0cIh1JOUBgefgGe80h4bB'; //'6DTJBAXQPLNZO4EE';  Chave da API FMD
     // const symbol = 'IBM'; // Símbolos das ações desejadas
 
@@ -155,7 +177,12 @@ exports.home = async (req, res) => {
       ];
     
     console.log(data);
-    res.render('home_user', { layout: false , data, data_transactions: data_transactions});
+    res.render('home_user', { 
+
+        layout: false , data, data_transactions: data_transactions, 
+        balance: balance, positiveTotal: positiveTotal, negativeTotal: negativeTotal,
+        data_transactions_in: data_transactions_in, data_transactions_out: data_transactions_out
+    });
 
   } catch (error) {
     console.error(error);

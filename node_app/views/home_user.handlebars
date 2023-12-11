@@ -9,7 +9,6 @@
 
 </head>
 <body>
-    {{log "User Object: " user}}
     <div class="container">
         <aside>
             <div class="top">
@@ -39,7 +38,7 @@
                     <span class="material-symbols-outlined">manage_accounts</span>
                     <h3>Configurações</h3>
                 </a>
-                <a href="#">
+                <a href="/user/transacoes">
                     <span class="material-symbols-outlined">add_shopping_cart</span>
                     <h3>Adicionar Lançamento</h3>
                 </a>
@@ -63,7 +62,7 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Balanço</h3>
-                            <h1>valor</h1>
+                            <h1>R${{ balance }},00</h1>
                         </div>
                         <div class="progress">
                             <svg>
@@ -82,7 +81,7 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Entradas</h3>
-                            <h1>valor</h1>
+                            <h1>{{positiveTotal}}</h1>
                         </div>
                         <div class="progress">
                             <svg>
@@ -101,7 +100,7 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Gastos</h3>
-                            <h1>valor</h1>
+                            <h1>{{negativeTotal}}</h1>
                         </div>
                         <div class="progress">
                             <svg>
@@ -137,10 +136,25 @@
                                 <td class="primary">Detalhes</td>
                             </tr>
                         {{/each}}
-                
+                        {{!-- {{#each data_transactions_in}}                         //Para usar no Entradas e saídas
+                            <tr>                                                     //data_transactions_in só tem os lançamento com valor positivo e 
+                                <td>{{dataValues.name}}</td>                         //data_transactions_out só tem os lançamento com valor negativo
+                                <td>{{dataValues.description}}</td>
+                                <td>R${{dataValues.value}}</td>
+                                <td class="primary">Detalhes</td>
+                            </tr>
+                        {{/each}}
+                        {{#each data_transactions_out}}
+                            <tr>
+                                <td>{{dataValues.name}}</td>
+                                <td>{{dataValues.description}}</td>
+                                <td>R${{dataValues.value}}</td>
+                                <td class="primary">Detalhes</td>
+                            </tr>
+                        {{/each}} --}}
                     </tbody>
                 </table>
-                <a href="/user/transacoes">Adicionar transacao</a>
+                 <a href="#">Mostrar mais</a>
             </div>
         </main>
 
