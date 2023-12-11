@@ -137,7 +137,7 @@
                         <tr>
                             <td>Example</td>
                             <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
-                            <td>R$80,00</td>
+                            <td>R$80,00 {{data.dataValues.value}}</td>
                             <td class="primary">Detalhes</td>
                         </tr>
                         <tr>
@@ -225,6 +225,13 @@
             </div>
         </div>
     </div>
+
+    {{#each data_transactions}}
+        <li>
+            <p>Tipo de Transação: {{dataValues.transation_type}}</p>            {{!--    EXIBINDO TRANSAÇÕES NA HOME BACK FEITO, FALTA O FRONT --}}
+            <p>Valor: {{dataValues.value}}</p>
+        </li>
+    {{/each}}
     <script>
         const themeToggler = document.querySelector(".theme-toggler");
 

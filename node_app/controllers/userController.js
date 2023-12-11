@@ -1,5 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const bcrypt = require ('bcrypt');
+const Dbanco = require ('../models/Dados_bancarios.js');
 // const fetch = require('node-fetch').default || require('node-fetch');
 
 exports.profile = (req, res) => {
@@ -64,6 +65,8 @@ exports.update = async (req, res) =>{
 
 exports.home = async (req, res) => {
   try {
+
+    const data_transactions = await Dbanco.findAll({ where: { user_id: req.user.dataValues.id } });
     // const apiKey = '27Pbu8Kw18B0cIh1JOUBgefgGe80h4bB'; //'6DTJBAXQPLNZO4EE';  Chave da API FMD
     // const symbol = 'IBM'; // Símbolos das ações desejadas
 
@@ -152,7 +155,7 @@ exports.home = async (req, res) => {
       ];
     
     console.log(data);
-    res.render('home_user', { layout: false , data});
+    res.render('home_user', { layout: false , data, data_transactions: data_transactions});
 
   } catch (error) {
     console.error(error);
