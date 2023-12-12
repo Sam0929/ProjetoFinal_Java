@@ -80,6 +80,15 @@ exports.home = async (req, res) => {
     }, 0);
 
     
+    const totalValue = data_transactions.reduce((total, transaction) => {
+      return total + Math.abs(transaction.value);
+    }, 0);
+
+    const incomePercentage = parseInt((positiveTotal / totalValue) * 100);
+    
+    const expensePercentage = parseInt((Math.abs(negativeTotal) / totalValue) * 100);
+
+
       const result = await Dbanco.findOne({
         attributes: [
           [Sequelize.fn('SUM', Sequelize.col('value')), 'balance']
@@ -88,6 +97,8 @@ exports.home = async (req, res) => {
       });
     
       const balance = result.get('balance');
+      
+      
 
     // const apiKey = '27Pbu8Kw18B0cIh1JOUBgefgGe80h4bB'; //'6DTJBAXQPLNZO4EE';  Chave da API FMD
     // const symbol = 'IBM'; // Símbolos das ações desejadas
@@ -181,7 +192,8 @@ exports.home = async (req, res) => {
 
         layout: false , data, data_transactions: data_transactions, 
         balance: balance, positiveTotal: positiveTotal, negativeTotal: negativeTotal,
-        data_transactions_in: data_transactions_in, data_transactions_out: data_transactions_out
+        data_transactions_in: data_transactions_in, data_transactions_out: data_transactions_out,
+        incomePercentage: incomePercentage, expensePercentage: expensePercentage
     });
 
   } catch (error) {
