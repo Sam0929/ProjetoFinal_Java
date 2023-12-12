@@ -67,7 +67,7 @@ exports.addStokes = async (req, res) => {
 
         const atualStokes = user.dataValues.stokes;
 
-        user.stokes = atualStokes + "," + req.body.stoke;
+        user.stokes = atualStokes + "," + req.body.stoke + ",";
         console.log(user.stokes);
         user.save()
             .then(() => {

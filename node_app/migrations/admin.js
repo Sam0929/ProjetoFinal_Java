@@ -16,7 +16,7 @@ const initializeApp = async () => {
           email: 'vaninisamuel1324@gmail.com',
           password: hashedPassword,
           role: 'admin',
-          stokes: null
+          stokes: "null,GOOGL,"
         });
 
         let userId = newUser.dataValues.id;

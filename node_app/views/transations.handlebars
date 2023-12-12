@@ -1,15 +1,35 @@
+<div class='container mt-5'>
+        <div class='row justify-content-center'>
+            <div class='col-md-8'>
 
-<form action="/user/transacoes/add" method="POST">
+                <div class='card'>
+                
+                    <div class='card-body'> 
 
+                            <form action= "/user/transacoes/add" method="POST">
+                        
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nome</label>
+                                    <input type="text" id = "name" name="name" class="form-control"  placeholder="Nome..">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Descrição</label>
+                                    <input type="description" id = "description" name="description" class="form-control" placeholder="Descrição.." required>
+                                </div>
 
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+                                <div class="mb-3">
+                                    <label for="value" class="form-label">Valor</label>
+                                    <input id="value" type="value" class="form-control" name="value" placeholder="Valor" required>
+                                </div>
+                                
+                                <button type='submit' class='btn btn-primary'>Adicionar transação</button>
 
-    <label for="description">Descrição</label>
-    <input type="text" id="description" name="description" required>
+                            </form>
+                        
+                    </div>
 
-    <label for="value">Value:</label>
-    <input type="number" id="value" name="value" required>
-
-    <button type="submit">Add Transaction</button>
-</form>
+                </div>
+            </div>
+        </div>
+    </div>
