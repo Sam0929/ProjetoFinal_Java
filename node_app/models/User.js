@@ -18,7 +18,6 @@ const Users = db.sequelize.define('users', {
     },
     stokes: {
         type: db.Sequelize.STRING, allowNull: true,
-        defaultValue: 'NA'
     }
 });
 

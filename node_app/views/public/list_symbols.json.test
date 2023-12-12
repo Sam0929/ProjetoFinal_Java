@@ -1,0 +1,26 @@
+[
+    {
+      "symbol": "PMGOLD.AX",
+      "name": "Perth Mint Gold",
+      "price": 17.94,
+      "exchange": "Australian Securities Exchange",
+      "exchangeShortName": "ASX",
+      "type": "etf"
+    },
+    {
+      "symbol": "CEREBRAINT.NS",
+      "name": "Cerebra Integrated Technologies Limited",
+      "price": 7,
+      "exchange": "National Stock Exchange of India",
+      "exchangeShortName": "NSE",
+      "type": "stock"
+    },
+    {
+      "symbol": "SRF.NS",
+      "name": "SRF Limited",
+      "price": 2442.4,
+      "exchange": "National Stock Exchange of India",
+      "exchangeShortName": "NSE",
+      "type": "stock"
+    }
+]

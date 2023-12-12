@@ -21,5 +21,11 @@ router_users.get('/transacoes', ensureAuthenticated, req_user, transationsContro
 
 router_users.post('/transacoes/add', ensureAuthenticated, req_user, transationsController.add);
 
+router_users.get('/stokes', ensureAuthenticated, req_user, transationsController.stokes);
+
+router_users.post('/stokes/add', ensureAuthenticated, req_user, transationsController.addStokes);
+
+router_users.post('/stokes/delete/', ensureAuthenticated, req_user, transationsController.deleteStokes);
+
 module.exports = router_users;
 

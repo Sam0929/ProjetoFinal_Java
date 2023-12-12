@@ -63,7 +63,7 @@
                         <div class="left">
                             <h3>Balanço</h3>
                             {{#if balance}}
-                                <h1>R${{ balance }},00</h1>
+                                <h1>R${{balance}}</h1>
                             {{else}}
                                 <h1>R$0,00</h1>
                             {{/if}}
@@ -85,7 +85,11 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Entradas</h3>
-                            <h1>{{positiveTotal}}</h1>
+                            {{#if positiveTotal}}
+                                <h1>R${{positiveTotal}}</h1>
+                            {{else}}
+                                <h1>R$0,00</h1>
+                            {{/if}}
                         </div>
                         <div class="progress">
                             <svg>
@@ -109,7 +113,11 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Gastos</h3>
-                            <h1>{{negativeTotal}}</h1>
+                            {{#if negativeTotal}}
+                                <h1>R${{negativeTotal}}</h1>
+                            {{else}}
+                                <h1>R$0,00</h1>
+                            {{/if}}
                         </div>
                         <div class="progress">
                             <svg>
@@ -206,8 +214,8 @@
 
             <div class="investor">
                 <h2>Mercado de Ações</h2>
-                {{#if data}}
-                    {{#each data}}
+                {{#if stokes}}
+                    {{#each stokes}}
                         <div class="item">
                             <div class="icon">
                                 {{#if (gt changesPercentage 0)}}
@@ -231,17 +239,19 @@
                         </div>
                     {{/each}}
                 {{else}}
-                    <p>No data available.</p>
+                    
                 {{/if}}
                 
                 <div class="item add-stock">
                     <span class="material-symbols-outlined">add</span>
-                    <h3>Adicionar Ação</h3>
+                    <a href="/user/stokes">Adicionar Ação</a>
                 </div>
             </div>
         </div>
     </div>
     <script>
+        const symbol = "{{user.dataValues.stokes}}";
+        console.log("{{stokes}}");
         const themeToggler = document.querySelector(".theme-toggler");
 
         //change theme

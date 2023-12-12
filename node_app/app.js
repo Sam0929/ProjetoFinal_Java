@@ -62,6 +62,10 @@
                     return user && user.role === role ? options.fn(this) : options.inverse(this);
                 },
 
+                json: function(context) {
+                    return JSON.stringify(context);
+                },
+                
                 eq: (v1, v2) => v1 === v2,
                 ne: (v1, v2) => v1 !== v2,
                 lt: (v1, v2) => v1 < v2,
