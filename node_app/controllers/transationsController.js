@@ -96,7 +96,7 @@ exports.deleteStokes = async (req, res) => {
 
         if (!errors.isEmpty()) {
             // Se houver erros de validação, renderize a página do formulário novamente com os erros
-            return res.render('stokes', { errors: errors.array() });
+            return res.render('stokes', { errors: errors.array() , layout:false});
         }
 
         const atualStokes = user.dataValues.stokes;
