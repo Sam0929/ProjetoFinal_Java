@@ -17,6 +17,7 @@
 // Banco de dados
 
     require('./models/db.js');
+    require('./models/Dados_bancarios.js');
     require('./models/User.js');
 
 //

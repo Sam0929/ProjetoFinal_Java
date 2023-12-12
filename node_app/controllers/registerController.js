@@ -3,11 +3,6 @@ const bcrypt = require ('bcrypt');
 const User = require('../models/User');
 const Dbanco = require ('../models/Dados_bancarios.js');
 
-exports.register = (req, res) => {
-    res.render('signup');
-};
-
-
 exports.authregister = async (req, res) => {
 
     try {
@@ -41,24 +36,14 @@ exports.authregister = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
   
         // Create user
-        const newUser = await User.create({
+        await User.create({
             name: name,
             email: email,
             password: passwordHash,
             role: 'user',
         });
 
-        // Obter o ID do usuário recém-criado
-        const userId = newUser.id;
-
-        // Criar entrada na tabela Dbanco associada ao usuário
-        await Dbanco.create({
-            balance: 0.0,
-            stock: '0',
-            user_id: userId,
-        });
-
-        console.log('Usuário e Dbanco criados com sucesso!');
+        console.log('Usuário criado com sucesso!');
         req.flash('success_msg', 'Usuário criado com sucesso!');
         res.redirect('/login');
     } catch (error) {

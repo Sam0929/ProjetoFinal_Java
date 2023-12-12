@@ -62,7 +62,11 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Balanço</h3>
-                            <h1>R${{ balance }},00</h1>
+                            {{#if balance}}
+                                <h1>R${{ balance }},00</h1>
+                            {{else}}
+                                <h1>R$0,00</h1>
+                            {{/if}}
                         </div>
                         <div class="progress">
                             <svg>
@@ -88,7 +92,12 @@
                                 <circle cx="38" cy="38" r="36"></circle>
                             </svg>
                             <div class="number">
-                                <p>{{incomePercentage}}%</p>
+                                {{#if incomePercentage}}
+                                    <p>{{incomePercentage}}%</p>
+                                {{else}}
+                                    <p>0%</p>
+                                {{/if}}
+                            
                             </div>
                         </div>
                     </div>
@@ -107,7 +116,13 @@
                                 <circle cx="38" cy="38" r="36"></circle>
                             </svg>
                             <div class="number">
-                                <p>{{expensePercentage}}%</p>
+
+                                {{#if expensePercentage}}
+                                    <p>{{expensePercentage}}%</p>
+                                {{else}}
+                                    <p>0%</p>
+                                {{/if}}
+                                
                             </div>
                         </div>
                     </div>
@@ -127,15 +142,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#if data_transactions }}
+                       
+                            {{#each data_transactions}}
+                                <tr>
+                                    <td>{{dataValues.name}}</td>
+                                    <td>{{dataValues.description}}</td>
+                                    <td>R${{dataValues.value}}</td>
+                                    <td class="primary">Detalhes</td>
+                                </tr>
+                            {{/each}}
 
-                        {{#each data_transactions}}
+                        {{else}}
                             <tr>
-                                <td>{{dataValues.name}}</td>
-                                <td>{{dataValues.description}}</td>
-                                <td>R${{dataValues.value}}</td>
-                                <td class="primary">Detalhes</td>
+                                <td colspan="4">Nenhum lançamento encontrado</td>
                             </tr>
-                        {{/each}}
+                        {{/if}}
                         {{!-- {{#each data_transactions_in}}                         //Para usar no Entradas e saídas
                             <tr>                                                     //data_transactions_in só tem os lançamento com valor positivo e 
                                 <td>{{dataValues.name}}</td>                         //data_transactions_out só tem os lançamento com valor negativo
